@@ -116,19 +116,19 @@ function getdata(link,demandeur){
 
 					//on utilise cheerio pour simplifier le parcours du DOM puis on commence à chercher les informations dans la page
 					var $ = cheerio.load(body);
-					var titre = $('#ad_subject').text();
+					var titre = $('h1.no-border').text();
 
-					var adresse = $('.lbcParams').first().children().eq(1).first().first().children().eq(1).children().eq(0);
+					var adresse = $("[itemprop='address']").text();
 
-					var ville = adresse.children().eq(0).children().eq(1).text();
-					var CP = adresse.children().eq(1).children().eq(1).text();
+					var ville = adresse.substring(adresse.length, adresse.length-6);
+					var CP = adresse.substring(adresse.length-5, adresse.length);
 
 					var coord = $('.lbcParams').first().children().eq(1).first().first().children().eq(1).children().eq(1);
 
 					var latitude = coord.children().eq(0).children().eq(0).attr('content');
 					var longitude = coord.children().eq(1).children().eq(0).attr('content');
 
-					var description = $('.AdviewContent').children().eq(1).text();
+					var description = $("[itemprop='description']").text();
 					description = description.replace(/\s+/g," ");
 
 					if(description){
@@ -138,9 +138,8 @@ function getdata(link,demandeur){
 						donneesannonce.mail = mail;
 					}
 
-					var image = $('#image').attr('style');
+					var image = $("[data-popin-type='image']").children().eq(0).attr('src');
 					if(image){
-						image = image.substring(23, image.length-3);
 						image = 'http:'+image;
 					}
 

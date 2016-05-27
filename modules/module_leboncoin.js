@@ -17,10 +17,10 @@ function getlinks(parregion,parville,parnbpage,parencoding,demandeur,callback){
 				//quelques variable pour tenir ce que l'on cherche dans le markup
 				var lien;
 
-				$('.lbc').filter(function(){  //on selectionne toutes les elements ayant la classe lbc puis on les parcours un par un
+				$('.dontSwitch').children().each(function(){  //on selectionne toutes les elements ayant la classe lbc puis on les parcours un par un
 
 					//lien de l'annonce detaillée
-					lien = $(this).parent().attr('href');
+					lien = $(this).children().eq(0).attr('href');
 					lien = "http:"+lien;
 
 					//objet qui contient les informations relatives à l'annonce que l'on remplit avec nos variables
